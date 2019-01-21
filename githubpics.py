@@ -1,10 +1,9 @@
-#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
 """
 MAC ONLY.
 This if for convenience of writing markdown notes:
-Send screenshots to github and get the raw url,
+Send screenshots to github and get the raw url, 
 then paste in markdown file as a permanent image link.
 BTW, it has minimum logging and error control.
 
@@ -16,7 +15,7 @@ REQUIREMENT:
 CONFIGURATION:
     Github repository address
     Github Personal Access Token
-
+    
 """
 
 import os
@@ -68,18 +67,18 @@ def get_pasteboard_img_or_filepath():
     Mix `pngpaste` cli tool and `NSPasteboard` python mudule
     for reading both img files or file path from pasteboard
     """
-    pb = NSPasteboard.generalPasteboard()  # Get data object from clipboard
+    pb = NSPasteboard.generalPasteboard()  # Get data object from clipboard 
     data_type = pb.types()                 # Get type of the data
 
-    # Recognize data type for furher processing
+    # Recognize data type for furher processing 
     if NSPasteboardTypePNG in data_type or \
             NSPasteboardTypeTIFF in data_type:      # Get data content by data type
         filepath = '/tmp/%d.png' % int(time.time() * 1000)
         os.system('pngpaste %s' % filepath)         # save img to local file
-    elif NSPasteboardTypeString in data_type:
+    elif NSPasteboardTypeString in data_type:    
         # Text: if it's already a filepath then just return it
         filepath = str(pb.dataForType_(NSPasteboardTypeString))
-    else:
+    else: 
         return None
 
     return filepath if os.path.exists(filepath) else None
@@ -87,14 +86,14 @@ def get_pasteboard_img_or_filepath():
 
 def get_pasteboard_img():
     """
-    Get image from pasteboard/clipboard and save to file
+    Get image from pasteboard/clipboard and save to file 
     DEPRECATED: FOR THE REASON IT ONLY GENERATES TIFF IMAGE FROM CLIPBOARD
     WHICH MAKES TO BE NEEDED ONE MORE FUNCTION TO CONVERT IMAGE TO PNG
     """
-    pb = NSPasteboard.generalPasteboard()  # Get data object from clipboard
+    pb = NSPasteboard.generalPasteboard()  # Get data object from clipboard 
     data_type = pb.types()                 # Get type of the data
 
-    # Recognize data type for furher processing
+    # Recognize data type for furher processing 
     if NSPasteboardTypePNG in data_type:         # PNG:
         # Get data content by data type
         data = pb.dataForType_(NSPasteboardTypePNG)
@@ -105,7 +104,7 @@ def get_pasteboard_img():
     elif NSPasteboardTypeString in data_type:    # Text: if it's already a filepath then just return it
         data = str(pb.dataForType_(NSPasteboardTypeString))
         return data if os.path.exists(data) else None
-    else:
+    else: 
         return None
 
     # Write data to a local file
